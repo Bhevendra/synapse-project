@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "23bdba4f-7b04-4e98-b680-2050a55bc57d"
+				"spark.autotune.trackingId": "4487670b-b9f4-4359-b1d7-55f8344119bc"
 			}
 		},
 		"metadata": {
@@ -63,7 +63,7 @@
 					"df = spark.read.format(\"csv\") \\\n",
 					"    .option(\"header\", \"true\") \\\n",
 					"    .option(\"inferSchema\", \"true\") \\\n",
-					"    .load(f\"abfss://{source_container}@ecomdevbranchstorage.dfs.core.windows.net/{file_name}\")\n",
+					"    .load(f\"abfss://{source_container}@ecomdevbranchstorage.dfs.core.windows.net/{bronze_table}\")\n",
 					"\n",
 					"# Add audit columns\n",
 					"bronze_df = df \\\n",
