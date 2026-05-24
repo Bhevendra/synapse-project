@@ -1,5 +1,5 @@
 {
-	"name": "Notebook 1",
+	"name": "nb_bronze",
 	"properties": {
 		"nbformat": 4,
 		"nbformat_minor": 2,
@@ -18,15 +18,16 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "b6802feb-7ddd-4520-a1a5-935464a0744c"
+				"spark.autotune.trackingId": "f89c414c-a830-49ba-a73b-c06a41cd220f"
 			}
 		},
 		"metadata": {
 			"saveOutput": true,
-			"synapse_widget": {
-				"version": "0.1"
-			},
 			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
 			"language_info": {
 				"name": "python"
 			},
@@ -37,13 +38,13 @@
 				"endpoint": "https://retaildata-synapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpoolbronze",
 				"auth": {
 					"type": "AAD",
-					"authResource": "https://dev.azuresynapse.net",
-					"authHeader": null
+					"authResource": "https://dev.azuresynapse.net"
 				},
 				"sparkVersion": "3.5",
 				"nodeCount": 3,
 				"cores": 4,
-				"memory": 28
+				"memory": 28,
+				"automaticScaleJobs": false
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -57,32 +58,29 @@
 					"from pyspark.sql.functions import *\n",
 					"from pyspark.sql.types import *\n",
 					"\n",
-					"customers_df = spark.read.format(\"csv\") \\\n",
+					"# Parameters coming from Synapse Pipeline\n",
+					"source_container = source_container\n",
+					"file_name = file_name\n",
+					"bronze_table = bronze_table\n",
+					"bronze_container = bronze_container\n",
+					"\n",
+					"# Read source file dynamically\n",
+					"df = spark.read.format(\"csv\") \\\n",
 					"    .option(\"header\", \"true\") \\\n",
 					"    .option(\"inferSchema\", \"true\") \\\n",
-					"    .load(\"abfss://retail-data@ecomdevbranchstorage.dfs.core.windows.net/customers/*\")\n",
+					"    .load(f\"abfss://{source_container}@ecomdevbranchstorage.dfs.core.windows.net/{file_name}\")\n",
 					"\n",
-					"display(customers_df)"
-				],
-				"execution_count": 6
-			},
-			{
-				"cell_type": "code",
-				"source": [
-					"bronze_df = customers_df \\\n",
+					"# Add audit columns\n",
+					"bronze_df = df \\\n",
 					"    .withColumn(\"file_path\", input_file_name()) \\\n",
-					"    .withColumn(\"last_update_ts\", current_timestamp()) \n",
+					"    .withColumn(\"last_update_ts\", current_timestamp())\n",
 					"\n",
-					"display(bronze_df)"
-				]
-			},
-			{
-				"cell_type": "code",
-				"source": [
+					"# Write to bronze dynamically\n",
 					"bronze_df.write.format(\"delta\") \\\n",
 					"    .mode(\"overwrite\") \\\n",
-					"    .save(\"abfss://bronze@ecomdevbranchstorage.dfs.core.windows.net/customers/\")"
-				]
+					"    .save(f\"abfss://{bronze_container}@ecomdevbranchstorage.dfs.core.windows.net/{bronze_table}/\")"
+				],
+				"execution_count": 6
 			}
 		]
 	}
