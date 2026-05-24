@@ -65,19 +65,31 @@
 								},
 								"parameters": {
 									"source_container": {
-										"value": "@item().source_container",
+										"value": {
+											"value": "@item().source_container",
+											"type": "Expression"
+										},
 										"type": "string"
 									},
 									"file_name": {
-										"value": "@item().file_name",
+										"value": {
+											"value": "@item().file_name",
+											"type": "Expression"
+										},
 										"type": "string"
 									},
-									"@item().file_name": {
-										"value": "@item().bronze_table",
+									"bronze_table": {
+										"value": {
+											"value": "@item().bronze_table",
+											"type": "Expression"
+										},
 										"type": "string"
 									},
 									"bronze_container": {
-										"value": "@item().bronze_container",
+										"value": {
+											"value": "@item().bronze_container",
+											"type": "Expression"
+										},
 										"type": "string"
 									}
 								},
@@ -85,7 +97,13 @@
 								"sparkPool": {
 									"referenceName": "sparkpoolbronze",
 									"type": "BigDataPoolReference"
-								}
+								},
+								"conf": {
+									"spark.dynamicAllocation.enabled": null,
+									"spark.dynamicAllocation.minExecutors": null,
+									"spark.dynamicAllocation.maxExecutors": null
+								},
+								"numExecutors": null
 							}
 						}
 					]
