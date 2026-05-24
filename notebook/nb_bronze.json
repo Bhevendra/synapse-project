@@ -18,7 +18,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "f89c414c-a830-49ba-a73b-c06a41cd220f"
+				"spark.autotune.trackingId": "23bdba4f-7b04-4e98-b680-2050a55bc57d"
 			}
 		},
 		"metadata": {
@@ -58,11 +58,6 @@
 					"from pyspark.sql.functions import *\n",
 					"from pyspark.sql.types import *\n",
 					"\n",
-					"# Parameters coming from Synapse Pipeline\n",
-					"source_container = source_container\n",
-					"file_name = file_name\n",
-					"bronze_table = bronze_table\n",
-					"bronze_container = bronze_container\n",
 					"\n",
 					"# Read source file dynamically\n",
 					"df = spark.read.format(\"csv\") \\\n",
