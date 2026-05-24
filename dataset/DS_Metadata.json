@@ -1,0 +1,42 @@
+{
+	"name": "DS_Metadata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SynapseSqlPool",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "source_container",
+				"type": "varchar"
+			},
+			{
+				"name": "file_name",
+				"type": "varchar"
+			},
+			{
+				"name": "bronze_table",
+				"type": "varchar"
+			},
+			{
+				"name": "bronze_container",
+				"type": "varchar"
+			},
+			{
+				"name": "is_active",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "meta",
+			"table": "bronze_config"
+		}
+	}
+}
