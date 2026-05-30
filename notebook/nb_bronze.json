@@ -21,7 +21,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "e665758f-d380-4a8e-bfb6-2c27a86801cd"
+				"spark.autotune.trackingId": "3507a3c0-ca92-4006-a9df-d692140919b4"
 			}
 		},
 		"metadata": {
@@ -71,6 +71,7 @@
 					"# Add audit columns\n",
 					"bronze_df = df \\\n",
 					"    .withColumn(\"file_path\", input_file_name()) \\\n",
+					"    .withColumn(\"last_update_ts\", current_timestamp())\n",
 					"    .withColumn(\"last_update_ts\", current_timestamp())\n",
 					"    \n",
 					"\n",
