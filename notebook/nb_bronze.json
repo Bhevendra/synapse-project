@@ -1,6 +1,9 @@
 {
 	"name": "nb_bronze",
 	"properties": {
+		"folder": {
+			"name": "Bronze"
+		},
 		"nbformat": 4,
 		"nbformat_minor": 2,
 		"bigDataPool": {
@@ -18,7 +21,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "3b940de8-f840-42cc-8b17-f85a129a4d5f"
+				"spark.autotune.trackingId": "e665758f-d380-4a8e-bfb6-2c27a86801cd"
 			}
 		},
 		"metadata": {
@@ -69,6 +72,7 @@
 					"bronze_df = df \\\n",
 					"    .withColumn(\"file_path\", input_file_name()) \\\n",
 					"    .withColumn(\"last_update_ts\", current_timestamp())\n",
+					"    \n",
 					"\n",
 					"# Write to bronze dynamically\n",
 					"bronze_df.write.format(\"delta\") \\\n",
